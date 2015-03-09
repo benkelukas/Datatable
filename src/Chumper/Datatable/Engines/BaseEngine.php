@@ -68,6 +68,11 @@ abstract class BaseEngine {
     protected $columns;
 
     /**
+     * @var Collection
+     */
+    protected $filters;
+
+    /**
      * @var array
      */
     protected  $searchColumns = array();
@@ -129,6 +134,7 @@ abstract class BaseEngine {
     function __construct()
     {
         $this->columns = new Collection();
+        $this->filters = new Collection();
         $this->config = Config::get('datatable::engine');
         $this->setExactWordSearch( isset($this->config['exactWordSearch'])? $this->config['exactWordSearch'] : false );
         $this->setEnableDisplayAll( isset($this->config['enableDisplayAll'])? $this->config['enableDisplayAll'] : false  );
@@ -159,6 +165,14 @@ abstract class BaseEngine {
         }
         return $this;
     }
+
+    public function addFilter($name, $filter) {
+        $this->filters->put($name, $filter);
+
+        return $this;
+    }
+
+
 
     /**
      * @param $name

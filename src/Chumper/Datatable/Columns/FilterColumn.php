@@ -39,7 +39,7 @@ class FilterColumn {
 
     public function run ()
     {
-        $view = View::make('datatables::filters.text', [
+        $view = View::make('datatable::filters.text', [
             'name' => $this->name
         ]);
         return (string)$view;
