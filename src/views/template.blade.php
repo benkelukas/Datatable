@@ -5,6 +5,11 @@
         @endfor
     </colgroup>
     <thead>
+    <tr role="row" class="filter">
+        @foreach ( $filters as $filter => $content )
+            {{ $content }}
+        @endforeach
+    </tr>
     <tr>
         @foreach($columns as $i => $c)
         <th align="center" valign="middle" class="head{{ $i }}">{{ $c }}</th>

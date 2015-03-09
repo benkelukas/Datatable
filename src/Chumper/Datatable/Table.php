@@ -1,5 +1,6 @@
 <?php namespace Chumper\Datatable;
 
+use Chumper\Datatable\Columns\FilterColumn;
 use Exception;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\View;
@@ -20,6 +21,11 @@ class Table {
      * @var array
      */
     private $columns = array();
+
+    /**
+     * @var array
+     */
+    private $filters = array();
 
     /**
      * @var array
@@ -118,6 +124,19 @@ class Table {
                 $this->aliasColumns[] = count($this->aliasColumns)+1;
             }
         }
+        return $this;
+    }
+
+    /**
+     * @param $name
+     * @param FilterColumn $filter
+     *
+     * @return $this
+     */
+    public function addFilter($name, $filter) {
+
+        $this->filters[$name] = $filter->run();
+
         return $this;
     }
 
@@ -310,6 +329,7 @@ class Table {
             'values'    => $this->customValues,
             'data'      => $this->data,
             'columns'   => array_combine($this->aliasColumns,$this->columns),
+            'filters'   => $this->filters,
             'noScript'  => $this->noScript,
             'id'        => $this->idName,
             'class'     => $this->className,
